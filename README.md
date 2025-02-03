@@ -132,6 +132,4 @@ Sinta-se à vontade para contribuir com o projeto, sugerir melhorias ou relatar 
 
 ## Licença
 
-## Licença
-
 Distribuído sob a **Licença MIT**. Veja o arquivo [LICENSE](LICENSE) para mais informações.
