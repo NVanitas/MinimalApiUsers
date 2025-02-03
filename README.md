@@ -1,71 +1,137 @@
 ```markdown
-# MinimalApiUsers
+# Minimal API Users - API de Autenticação com JWT
 
-Uma API simples e minimalista construída com .NET, PostgreSQL e Swagger para gerenciamento de usuários. Este projeto demonstra como criar e gerenciar usuários em um banco de dados, incluindo operações CRUD, autenticação e documentação da API usando Swagger. Ideal para aprendizado de desenvolvimento full-stack e melhores práticas de APIs.
+Este é um projeto de uma API minimalista utilizando **ASP.NET Core**, **Entity Framework** e **JWT Authentication** para gerenciar usuários e autenticação com tokens JWT.
 
+## Funcionalidades
+
+- **Registro de Usuário**: Endpoint para registrar novos usuários.
+- **Login (JWT)**: Endpoint para fazer login e gerar um token JWT.
+- **Autenticação**: Protege os endpoints com autenticação baseada em JWT.
+  
 ## Tecnologias Utilizadas
 
-- **.NET 8** - Framework para desenvolvimento de APIs.
-- **PostgreSQL** - Banco de dados relacional para armazenamento dos dados de usuários.
-- **Swagger** - Ferramenta para documentação da API e testes interativos.
-- **Entity Framework Core** - ORM para interação com o banco de dados.
-- **Docker (Opcional)** - Para rodar o PostgreSQL em contêineres.
-
-## Como Rodar o Projeto
+- **ASP.NET Core** - Framework para criar a API.
+- **Entity Framework Core** - Para o gerenciamento do banco de dados.
+- **PostgreSQL** - Banco de dados utilizado para armazenar os usuários.
+- **JWT (JSON Web Tokens)** - Para autenticação e autorização na API.
+- **Swagger** - Para documentação da API.
+  
+## Como Executar o Projeto
 
 ### Pré-requisitos
 
-1. **.NET SDK**: Certifique-se de ter o [SDK do .NET](https://dotnet.microsoft.com/download) instalado em sua máquina.
-2. **PostgreSQL**: Você precisará de uma instância do PostgreSQL em funcionamento. Se preferir, você pode rodar o PostgreSQL via Docker.
-
-### Passos para rodar localmente
+- **.NET 8**
+- **PostgreSQL** configurado e em execução.
+  
+### Passos
 
 1. Clone o repositório:
 
-   ```bash
-   git clone https://github.com/NVanitas/MinimalApiUsers.git
-   cd MinimalApiUsers
-   ```
+    ```bash
+    git clone https://github.com/SEU_USUARIO/MinimalApiUsers.git
+    ```
 
-2. Configure a string de conexão do PostgreSQL no arquivo `appsettings.json`:
+2. Navegue até a pasta do projeto:
 
-   ```json
-   "ConnectionStrings": {
-     "DefaultConnection": "Host=localhost;Database=meubanco;Username=meuusuario;Password=senha"
-   }
-   ```
+    ```bash
+    cd MinimalApiUsers
+    ```
 
-3. Realize a migração do banco de dados:
+3. Instale as dependências:
 
-   ```bash
-   dotnet ef database update
-   ```
+    ```bash
+    dotnet restore
+    ```
 
-4. Rode o projeto:
+4. Configure a string de conexão no arquivo `appsettings.json`:
 
-   ```bash
-   dotnet run
-   ```
+    ```json
+    {
+      "ConnectionStrings": {
+        "DefaultConnection": "Host=localhost;Database=seubanco;Username=seuusuario;Password=suasenha"
+      },
+      "Jwt": {
+        "Key": "supersecretkey12345", 
+        "Issuer": "yourIssuer",
+        "Audience": "yourAudience"
+      }
+    }
+    ```
 
-   A API estará disponível em `http://localhost:5000`.
+5. Crie o banco de dados e aplique as migrações:
 
-### Testando a API
+    ```bash
+    dotnet ef database update
+    ```
 
-A API estará documentada com o Swagger, e você pode acessá-la navegando para `http://localhost:5000/swagger` no seu navegador. A partir dessa interface, você poderá testar os endpoints da API interativamente.
+6. Execute o projeto:
 
-### Endpoints
+    ```bash
+    dotnet run
+    ```
 
-- **POST** `/users` - Criar um novo usuário.
-- **GET** `/users` - Obter todos os usuários cadastrados.
+### Endpoints da API
 
-## Contribuição
+#### 1. **POST /register**
+Cria um novo usuário.
 
-1. Faça um fork do repositório.
-2. Crie uma branch para a sua feature (`git checkout -b feature/nova-feature`).
-3. Faça o commit das suas alterações (`git commit -am 'Adicionando nova feature'`).
-4. Faça o push para a branch (`git push origin feature/nova-feature`).
-5. Crie um pull request.
+- **Request Body**:
+    ```json
+    {
+      "name": "Nome do Usuário",
+      "email": "email@dominio.com"
+    }
+    ```
+
+- **Response**:
+    - **201 Created**: Usuário criado com sucesso.
+    - **400 Bad Request**: Erro na solicitação.
+
+#### 2. **POST /login**
+Realiza o login do usuário e gera um token JWT.
+
+- **Request Body**:
+    ```json
+    {
+      "email": "email@dominio.com",
+      "password": "senha"
+    }
+    ```
+
+- **Response**:
+    - **200 OK**: Retorna o token JWT.
+    - **401 Unauthorized**: Dados incorretos.
+
+#### 3. **Protegido com Autenticação (exemplo)**
+Exemplo de como adicionar outros endpoints protegidos:
+
+```csharp
+app.MapGet("/protected", [Authorize] () =>
+{
+    return Results.Ok("Você tem acesso a este endpoint protegido.");
+});
+```
+
+### Testando com Swagger
+
+O projeto também vem com **Swagger** para testar os endpoints diretamente. Após rodar o projeto, você pode acessar a documentação da API em:
+
+```
+http://localhost:5000/swagger
+```
+
+### Considerações Finais
+
+- A **chave JWT**, **Issuer** e **Audience** podem ser ajustadas conforme suas necessidades.
+- A **validação de senha** no login foi simplificada e deve ser substituída por uma abordagem mais segura (por exemplo, usando **hashing** de senhas).
+  
+---
+
+Sinta-se à vontade para contribuir com o projeto, sugerir melhorias ou relatar problemas!
 
 ## Licença
 
-Este projeto está sob a [MIT License](LICENSE).
+Este projeto está licenciado sob a **MIT License**.
+
+```
