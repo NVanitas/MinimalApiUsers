@@ -1,0 +1,58 @@
+# User-specific files
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific folders
+.vs/
+.vs2019/
+.vs2017/
+
+# Windows Installer files
+Thumbs.db
+Desktop.ini
+
+# Windows Installer
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]ist/
+[Dd]ebugFinal/
+[Dd]istFinal/
+Release/
+ReleaseFinal/
+x64/
+x86/
+x64_Debug/
+x86_Debug/
+
+# User-specific files
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Windows Installer
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer
+Thumbs.db
+Desktop.ini
+
+# JetBrains Rider
+.idea/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
